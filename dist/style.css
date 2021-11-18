@@ -1,1 +1,8 @@
-/* Silence is golden */
+.tooltip {
+  position: absolute;
+  padding: 10px;
+  background: lightgrey;
+  border-radius: 5px;
+  /* pointer-events: none; */
+  opacity: 0;
+}
