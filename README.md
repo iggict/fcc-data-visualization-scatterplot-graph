@@ -1,4 +1,4 @@
-# Visualize Data with a Scatterplot Grap
+# Visualize Data with a Scatterplot Graph
 
 Challenge for the "Data Visualization" module of FreeCodeCamp
 
