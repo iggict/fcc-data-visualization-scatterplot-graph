@@ -26,8 +26,7 @@ const formatInt = d3.format("d");
 
 /** Color range */
 
-const dopingColor = d3.scaleOrdinal(d3.schemeCategory10)
-  .domain([false, true]);
+const dopingColor = d3.scaleOrdinal(d3.schemeCategory10).domain([false, true]);
 
 /*
 const getComplementaryColor = (color = '') => {
@@ -65,14 +64,14 @@ const title = graph
   .attr("id", "title")
   .attr("class", "title")
   .attr("x", width / 2)
-  .attr("y", -margin.top / 2)
+  .attr("y", -margin.top / 2 - 15)
   .text("Doping in Le tour de France");
 
 const subtitle = graph
   .append("text")
   .attr("class", "subtitle")
   .attr("x", width / 2)
-  .attr("y", -margin.top / 2 + margin.top / 2.5)
+  .attr("y", -margin.top / 2 + 20)
   .text("Fastest Alpe d'Huez climbs");
 
 /** X and Y scales */
@@ -105,7 +104,6 @@ const xLabel = xAxis
   .attr("class", "label")
   .attr("x", width)
   .attr("y", 45)
-  .style("text-anchor", "end")
   .text("edition (year)");
 
 const yLabel = yAxis
@@ -129,32 +127,28 @@ const legendLabel = legend
   .enter()
   .append("g")
   .attr("class", "legend-label")
-  .attr("transform", (d, i) => (
-     `translate(0, ${height/2 - i*20})`
-   ));
+  .attr("transform", (d, i) => `translate(0, ${height / 2 - i * 22})`);
+
+const colorWidth = 16;
 
 const legendLabelColor = legendLabel
   .append("rect")
   .attr("class", "legend-label-color")
-  .attr("x", width - 18)
+  .attr("width", colorWidth)
+  .attr("height", colorWidth)
+  .attr("x", width - colorWidth)
   .attr("rx", 5) // border radius
   .attr("ry", 5) // border radius
-  .attr("width", 18)
-  .attr("height", 18)
   .style("fill", dopingColor);
 
 const legendLabelText = legendLabel
-  .append('text')
+  .append("text")
   .attr("class", "legend-label-text")
-  .attr('x', width - 24)
-  .attr('y', 9)
-  .attr('dy', '.35em')
-  .style('text-anchor', 'end')
-  .text((d) => (
-    (!d) ? 'No doping allegations'
-         : 'Involved in doping allegations'
-  ));
-
+  .attr("x", width - colorWidth - 5)
+  .attr("dy", ".7rem")
+  .text((d) =>
+    !d ? "No doping allegations" : "Involved in doping allegations"
+  );
 
 /** Tooltip inner HTML */
 
@@ -179,6 +173,7 @@ const JSONFile =
 
 d3.json(JSONFile)
   .then((data) => {
+  
     /** Parse data */
 
     data.forEach((d) => (d.Time = parseTime(d.Time)));
@@ -186,15 +181,13 @@ d3.json(JSONFile)
     /** Set scales */
 
     const [xMin, xMax] = d3.extent(data, (d) => d.Year);
-
+  
     xScale.domain([xMin - 1, xMax + 1]);
-
     yScale.domain(d3.extent(data, (d) => d.Time));
 
     /** Set axis */
 
     xAxis.call(d3.axisBottom(xScale).tickFormat(formatInt));
-
     yAxis.call(d3.axisLeft(yScale).tickFormat(formatTime));
 
     /** Graph dots */
