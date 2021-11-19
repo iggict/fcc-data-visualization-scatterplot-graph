@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;800&display=swap");
 
 *,
 *:before,
@@ -23,15 +23,15 @@ body {
   /* background-color: #2f2f2f */
 }
 
-.container{
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100vw;    
+  width: 100vw;
 }
 
-.graph{
+.graph {
   margin: 0 auto;
   align-self: center;
   background: white;
@@ -46,24 +46,25 @@ body {
 
 .tooltip {
   position: absolute;
-  padding: 10px;
+  padding: 12px;
   background: white;
   border-radius: 5px;
-  pointer-events: none;
   box-shadow: 1px 1px 5px;
   opacity: 0;
+  /* It does not work correctly without this p-e property */
+  pointer-events: none;
 }
-  
+
 .tt-name {
-  font-weight: 800;
+  font-weight: bold;
 }
-  
+
 .tt-doping {
-  font-style: italic;  
+  font-style: italic;
 }
 
 .title {
-  color: #1d1e22;  
+  color: #1d1e22;
   font-size: 32px;
   text-anchor: middle;
 }
@@ -76,31 +77,33 @@ body {
 
 .label {
   font-size: 1.3rem;
-  fill: #379581;
+  fill: #bbbbbb;
+  text-anchor: end;
 }
 
 .legend-label {
-  background-color:red;
-  opacity: 0.8;    
+  opacity: 0.9;
 }
 
 .legend-label-color {
-  opacity: 0.8;    
+  opacity: 0.8;
 }
 
 .legend-label-text {
-  font-size: 0.8rem;   
+  font-size: 0.8rem;
+  text-anchor: end;
 }
 
 .dot {
   opacity: 0.8;
 }
 
-.x-axis path, .y-axis path {
+.x-axis path,
+.y-axis path {
   stroke: #c54a23;
   stroke-width: 1;
 }
 
 .tick {
-
+  /* stroke: #c54a23; */
 }
