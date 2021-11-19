@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500;800&display=swap');
 
 *,
 *:before,
@@ -20,6 +20,7 @@ html {
 body {
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
+  /* background-color: #2f2f2f */
 }
 
 .container{
@@ -27,35 +28,79 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100vw;  
+  width: 100vw;    
 }
 
 .graph{
   margin: 0 auto;
   align-self: center;
-  background:lightgrey
+  background: white;
+  /* border-radius: 5px; */
+}
+
+@media (min-width: 1000px) {
+  .graph {
+    /* box-shadow: 1px 1px 20px; */
+  }
 }
 
 .tooltip {
   position: absolute;
   padding: 10px;
-  background: lightgrey;
+  background: white;
   border-radius: 5px;
   pointer-events: none;
+  box-shadow: 1px 1px 5px;
   opacity: 0;
+}
+  
+.tt-name {
+  font-weight: 800;
+}
+  
+.tt-doping {
+  font-style: italic;  
 }
 
 .title {
+  color: #1d1e22;  
   font-size: 30px;
   text-anchor: middle;
 }
 
 .subtitle {
+  color: #1d1e22;
   font-size: 20px;
   text-anchor: middle;
 }
 
-.legend {
+.label {
   font-size: 18;
   fill: #9a8297;
+}
+
+.legend-label {
+  background-color:red;
+  opacity: 0.8;    
+}
+
+.legend-label-color {
+  opacity: 0.8;    
+}
+
+.legend-label-text {
+  font-size: 0.8rem;   
+}
+
+.dot {
+  opacity: 0.8;
+}
+
+.x-axis path, .y-axis path {
+  stroke: #c54a23;
+  stroke-width: 1;
+}
+
+.tick {
+  /* change color here */
 }
