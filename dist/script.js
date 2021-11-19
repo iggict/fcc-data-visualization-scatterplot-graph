@@ -24,6 +24,22 @@ const formatInt = d3.format("d");
   new Date(date.getTime() + minutes*60000)
 );*/
 
+/** Color range */
+
+const dopingColor = d3.scaleOrdinal(d3.schemeCategory10)
+  .domain([false, true]);
+
+/*
+const getComplementaryColor = (color = '') => {
+   const colorPart = color.slice(1);
+   const ind = parseInt(colorPart, 16);
+   let iter = ((1 << 4 * colorPart.length) - 1 - ind).toString(16);
+   while (iter.length < colorPart.length) {
+      iter = '0' + iter;
+   };
+   return '#' + iter;
+}; */
+
 /** D3 containers */
 
 const graph = d3
@@ -52,16 +68,16 @@ const title = graph
   .attr("y", 0 - margin.top / 2)
   //.attr("text-anchor", "middle")
   //.style("font-size", "30px")
-  .text("titleee");
+  .text("Doping in Le tour de France");
 
 const subtitle = graph
   .append("text")
   .attr("class", "subtitle")
   .attr("x", width / 2)
-  .attr("y", 0 - margin.top / 2 + 25)
+  .attr("y", 0 - margin.top / 2 + 35)
   //.attr('text-anchor', 'middle')
   //.style('font-size', '20px')
-  .text("Subtitleee");
+  .text("Fastest Alpe d'Huez climbs");
 
 /** X and Y scales */
 
@@ -70,9 +86,6 @@ const xScale = d3.scaleTime().range([0, width]);
 
 const yScale = d3.scaleLinear().range([0, height]);
 // domain will set in data loading
-
-// Color for the points
-const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 /** Axis */
 
@@ -86,44 +99,81 @@ const xAxis = graph
 const yAxis = graph.append("g").attr("id", "y-axis").attr("class", "y-axis");
 // call will set in data loading
 
-/** Axis legends */
+/** Axis labels */
 
-/* TODO
-const xLegend = xAxis
+// TODO
+
+const xLabel = xAxis
   .append("text")
-  .attr("class", "legend")
+  .attr("class", "label")
   .attr("transform", "rotate(-90)")
   .attr("y", 6)
   .attr("dy", ".71em")
   .style("text-anchor", "end")
   .text("Best Time (minutes)");
 
-const yLegend = yAxis
+const yLabel = yAxis
   .append("text")
-  .attr("class", "legend")
+  .attr("class", "label")
   .attr("transform", "rotate(-90)")
   .attr("x", -160)
   .attr("y", -44)
   .text("Time in Minutes");
-*/
+
+/** Legends */
+
+const legend = graph
+  .append("g")
+  .attr("id", "legend")
+  .attr("class", "legend");
+
+const legendLabel = legend
+  .selectAll("g")
+  .data(dopingColor.domain())
+  .enter()
+  .append("g")
+  .attr("class", "legend-label")
+  .attr("transform", (d, i) => (
+     `translate(0, ${height/2 - i*20})`
+   ));
+
+const legendLabelColor = legendLabel
+  .append("rect")
+  .attr("class", "legend-label-color")
+  .attr("x", width - 18)
+  .attr("rx", 5) // border radius
+  .attr("ry", 5) // border radius
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", dopingColor);
+
+const legendLabelText = legendLabel
+  .append('text')
+  .attr("class", "legend-label-text")
+  .attr('x', width - 24)
+  .attr('y', 9)
+  .attr('dy', '.35em')
+  .style('text-anchor', 'end')
+  .text((d) => (
+    (!d) ? 'No doping allegations'
+         : 'Involved in doping allegations'
+  ));
+
 
 /** Tooltip inner HTML */
 
 const tooltipInnerHtml = (item) => {
-  const innerHtml = ` 
+  const color = dopingColor(item.Doping == "");
+  return ` 
     <p>
-      <span class="tt-name">${item.Name}</span>
-      <span class="tt-nation">${item.Nationality}</span>
+      <span class="tt-name" style="color: ${color}">${item.Name}</span>
+      (<span class="tt-nation">${item.Nationality}</span>)
       <br />Year: 
       <span class="tt-year">${item.Year}</span>
-      <br />Time:
+       | Time:
       <span class="tt-time">${formatTime(item.Time)}</span>
     </p>
-    <p>
-      <span='tt-doping'>${item.Doping}</span>
-    </p>`;
-  console.log(innerHtml);
-  return innerHtml;
+    <p class="tt-doping">${item.Doping}</p>`;
 };
 
 /** Load data */
@@ -153,7 +203,7 @@ d3.json(JSONFile)
 
     /** Graph dots */
 
-    graph
+    const dot = graph
       .selectAll("circle")
       .data(data)
       .enter()
@@ -164,7 +214,7 @@ d3.json(JSONFile)
       .attr("r", radius)
       .attr("data-xvalue", (d) => d.Year)
       .attr("data-yvalue", (d) => d.Time.toISOString())
-      .style("fill", (d) => color(!d.Doping))
+      .style("fill", (d) => dopingColor(d.Doping == ""))
       .on("mouseover", (event, d) => {
         tooltip.transition().duration(300).style("opacity", 0.9);
         tooltip
