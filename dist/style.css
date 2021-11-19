@@ -64,19 +64,19 @@ body {
 
 .title {
   color: #1d1e22;  
-  font-size: 30px;
+  font-size: 32px;
   text-anchor: middle;
 }
 
 .subtitle {
   color: #1d1e22;
-  font-size: 20px;
+  font-size: 22px;
   text-anchor: middle;
 }
 
 .label {
-  font-size: 18;
-  fill: #9a8297;
+  font-size: 1.3rem;
+  fill: #379581;
 }
 
 .legend-label {
@@ -102,5 +102,5 @@ body {
 }
 
 .tick {
-  /* change color here */
+
 }
