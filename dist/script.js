@@ -3,8 +3,8 @@
 const margin = {
   top: 80,
   right: 25,
-  bottom: 30,
-  left: 45,
+  bottom: 60,
+  left: 65,
 };
 
 const parentWidth = 900;
@@ -13,7 +13,7 @@ const parentHeight = 480;
 const width = parentWidth - margin.left - margin.right;
 const height = parentHeight - margin.top - margin.bottom;
 
-const radius = 8;
+const radius = 8; // dot radius
 
 /** Datetime functions */
 
@@ -65,18 +65,14 @@ const title = graph
   .attr("id", "title")
   .attr("class", "title")
   .attr("x", width / 2)
-  .attr("y", 0 - margin.top / 2)
-  //.attr("text-anchor", "middle")
-  //.style("font-size", "30px")
+  .attr("y", -margin.top / 2)
   .text("Doping in Le tour de France");
 
 const subtitle = graph
   .append("text")
   .attr("class", "subtitle")
   .attr("x", width / 2)
-  .attr("y", 0 - margin.top / 2 + 35)
-  //.attr('text-anchor', 'middle')
-  //.style('font-size', '20px')
+  .attr("y", -margin.top / 2 + margin.top / 2.5)
   .text("Fastest Alpe d'Huez climbs");
 
 /** X and Y scales */
@@ -94,31 +90,31 @@ const xAxis = graph
   .attr("id", "x-axis")
   .attr("class", "x-axis")
   .attr("transform", `translate(0, ${height})`);
-// call will set in data loading
+  // call will set in data loading
 
-const yAxis = graph.append("g").attr("id", "y-axis").attr("class", "y-axis");
-// call will set in data loading
+const yAxis = graph
+  .append("g")
+  .attr("id", "y-axis")
+  .attr("class", "y-axis");
+  // call will set in data loading
 
 /** Axis labels */
-
-// TODO
 
 const xLabel = xAxis
   .append("text")
   .attr("class", "label")
-  .attr("transform", "rotate(-90)")
-  .attr("y", 6)
-  .attr("dy", ".71em")
+  .attr("x", width)
+  .attr("y", 45)
   .style("text-anchor", "end")
-  .text("Best Time (minutes)");
+  .text("edition (year)");
 
 const yLabel = yAxis
   .append("text")
   .attr("class", "label")
   .attr("transform", "rotate(-90)")
-  .attr("x", -160)
-  .attr("y", -44)
-  .text("Time in Minutes");
+  .attr("x", -10)
+  .attr("y", -50)
+  .text("time (minutes)");
 
 /** Legends */
 
