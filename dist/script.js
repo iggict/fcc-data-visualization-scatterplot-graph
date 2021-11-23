@@ -208,8 +208,8 @@ d3.json(JSONFile)
         tooltip.transition().duration(300).style("opacity", 0.9);
         tooltip
           .attr("data-year", d.Year)
-          .style("top", (event.pageY || event.x) + "px")
-          .style("left", (event.pageX || event.y) + "px")
+          .style("top", (event.pageY || event.y) + "px")
+          .style("left", (event.pageX || event.x) + "px")
           .html(tooltipInnerHtml(d));
       })
       .on("mouseout", function () {
